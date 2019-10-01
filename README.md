@@ -1,1 +1,2 @@
-first project
+first project 
+pip freezed > requirements.txt
