@@ -22,6 +22,7 @@ class PhoneModel(models.Model):
     def __str__(self):
         return self.name
 
+
 class Phone(models.Model):
     phone_model = models.ForeignKey('storage.PhoneModel', on_delete=models.CASCADE)
     author = models.ForeignKey('auth.User', on_delete=models.CASCADE)
@@ -31,4 +32,4 @@ class Phone(models.Model):
     date_modify = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
-        return self.phone_model+self.comment
+        return str(self.phone_model) + self.comment
