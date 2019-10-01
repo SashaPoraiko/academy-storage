@@ -32,4 +32,4 @@ class Phone(models.Model):
     date_modify = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
-        return str(self.phone_model) + self.comment
+        return ' '.join(map(str, (self.phone_model, self.comment)))
