@@ -33,3 +33,14 @@ class Phone(models.Model):
 
     def __str__(self):
         return ' '.join(map(str, (self.phone_model, self.comment)))
+
+
+class Part(models.Model):
+    name = models.CharField(max_length=80)
+    condition = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(10)])
+    phone_models = models.ManyToManyField('storage.PhoneModel')
+
+    def __str__(self):
+        return f'name: {self.name}, condition: {self.condition}'
+
+
