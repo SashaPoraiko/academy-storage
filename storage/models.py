@@ -44,3 +44,4 @@ class Part(models.Model):
         return f'name: {self.name}, condition: {self.condition}'
 
 
+
