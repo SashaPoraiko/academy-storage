@@ -43,5 +43,13 @@ class Part(models.Model):
     def __str__(self):
         return f'name: {self.name}, condition: {self.condition}'
 
+      
+class Storage(models.Model):
+    locker = models.CharField(max_length=80)
+    row = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(10)])
+    column = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(10)])
+    part = models.ForeignKey('storage.Part', null=True, blank=True, on_delete=models.CASCADE)
+    phone = models.ForeignKey('storage.Phone', null=True, blank=True, on_delete=models.CASCADE)
 
-
+    def __str__(self):
+        return ' '.join(map(str, (self.locker, self.row, self.column)))
