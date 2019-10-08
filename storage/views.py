@@ -40,13 +40,18 @@ class PhoneViewSet(viewsets.ModelViewSet):
             if date_create_to:
                 self.queryset = self.queryset.filter(date_create__lte=date_create_to)
 
-
         return self.queryset
 
 
 class PartViewSet(viewsets.ModelViewSet):
     queryset = Part.objects.all()
     serializer_class = PartSerializer
+
+    def get_queryset(self):
+        name = self.request.query_params.get('name', None)
+        if name is not None:
+            self.queryset = self.queryset.filter(name__icontains=name)
+        return self.queryset
 
 
 class PhoneModelViewSet(viewsets.ModelViewSet):
