@@ -16,10 +16,7 @@ class PhoneViewSet(viewsets.ModelViewSet):
     serializer_class = PhoneSerializer
 
     def get_queryset(self):
-        """
-        Optionally restricts the returned purchases to a given user,
-        by filtering against a `username` query parameter in the URL.
-        """
+
         comment = self.request.query_params.get('comment', None)
         if comment is not None:
             self.queryset = self.queryset.filter(comment__icontains=comment)
