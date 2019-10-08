@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
 
-from .models import Phone, Part, PhoneModel
+from .models import Phone, Part, PhoneModel, Storage
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
@@ -31,3 +31,12 @@ class PartSerializer(serializers.ModelSerializer):
     class Meta:
         model = Part
         fields = ('id', 'name', 'condition', 'phone_models')
+
+
+class StorageSerializer(serializers.ModelSerializer):
+    part = PartSerializer()
+    phone = PhoneSerializer()
+
+    class Meta:
+        model = Storage
+        fields = ('id', 'locker', 'row', 'column', 'part', 'phone')
