@@ -18,6 +18,7 @@ class PhoneViewSet(viewsets.ModelViewSet):
     serializer_class = PhoneSerializer
 
     def get_queryset(self):
+ restpartfilter
         data = parse_query_params(
             self.request.query_params.copy(),
             (('date-create-from', 'date_create_from'),)
@@ -26,6 +27,8 @@ class PhoneViewSet(viewsets.ModelViewSet):
         if filter_serializer.is_valid():
             return self.queryset.filter(**filter_serializer.validated_data)
         return self.queryset
+
+
 
 
 class PartViewSet(viewsets.ModelViewSet):
