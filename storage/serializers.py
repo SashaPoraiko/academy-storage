@@ -17,7 +17,7 @@ class PhoneModelSerializer(serializers.ModelSerializer):
         fields = ('id', 'name', 'brand', 'model_year')
 
 
-class PhoneSerializer(serializers.ModelSerializer):
+class PhoneReadSerializer(serializers.ModelSerializer):
     author = UserSerializer()
     phone_model = PhoneModelSerializer()
 
@@ -26,7 +26,7 @@ class PhoneSerializer(serializers.ModelSerializer):
         fields = ('id', 'phone_model', 'author', 'comment', 'date_release', 'date_create', 'date_modify')
 
 
-class PartSerializer(serializers.ModelSerializer):
+class PartReadSerializer(serializers.ModelSerializer):
     phone_models = PhoneModelSerializer(many=True)
 
     class Meta:
@@ -41,14 +41,40 @@ class PartWriteSerializer(serializers.ModelSerializer):
         model = Part
         fields = ('name', 'condition', 'phone_models')
 
+    def to_representation(self, instance):
+        return PartReadSerializer(instance).data
 
-class StorageSerializer(serializers.ModelSerializer):
-    part = PartSerializer()
-    phone = PhoneSerializer()
+
+class StorageReadSerializer(serializers.ModelSerializer):
+    part = PartReadSerializer()
+    phone = PhoneReadSerializer()
 
     class Meta:
         model = Storage
         fields = ('id', 'locker', 'row', 'column', 'part', 'phone')
+
+
+class StorageWriteSerializer(serializers.ModelSerializer):
+    part = serializers.PrimaryKeyRelatedField(queryset=Part.objects.all())
+    phone = serializers.PrimaryKeyRelatedField(queryset=Phone.objects.all())
+
+    class Meta:
+        model = Storage
+        fields = ('locker', 'row', 'column', 'part', 'phone')
+
+    def to_representation(self, instance):
+        return PartReadSerializer(instance).data
+
+
+class PhoneWriteSerializer(serializers.ModelSerializer):
+    phone_model = serializers.PrimaryKeyRelatedField(queryset=PhoneModel.objects.all())
+
+    class Meta:
+        model = Phone
+        fields = ('phone_model', 'author', 'comment', 'date_release', 'date_create', 'date_modify')
+
+    # def to_representation(self, instance):
+    #     return PhoneReadSerializer(instance).data
 
 
 class PhoneFilterSerializer(serializers.Serializer):
