@@ -43,7 +43,7 @@ class Part(models.Model):
     def __str__(self):
         return f'name: {self.name}, condition: {self.condition}'
 
-      
+
 class Storage(models.Model):
     locker = models.CharField(max_length=80)
     row = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(10)])
@@ -53,3 +53,9 @@ class Storage(models.Model):
 
     def __str__(self):
         return ' '.join(map(str, (self.locker, self.row, self.column)))
+
+    def save(self, force_insert=False, force_update=False, using=None,
+             update_fields=None):
+        if self.part and self.phone:
+            raise Exception('Cant hold 2 items')
+        return super().save(force_insert, force_update, using, update_fields)
