@@ -27,10 +27,11 @@ class PaginateMixin(viewsets.GenericViewSet):
 
 class StorageMixin(viewsets.GenericViewSet):
     def get_queryset(self):
+        queryset = super().get_queryset()
         filter_serializer = getattr(self, 'filter_serializer', None)
 
         if filter_serializer is None:
-            return self.queryset
+            return queryset
 
         data = parse_query_params(
             self.request.query_params,
@@ -38,11 +39,25 @@ class StorageMixin(viewsets.GenericViewSet):
         )
         filter_serializer = filter_serializer(data=data, context={'request': self.request})
         if filter_serializer.is_valid():
-            return self.queryset.filter(**filter_serializer.validated_data)
-        return self.queryset
+            return queryset.filter(**filter_serializer.validated_data)
+
+        return queryset
+
+    def get_serializer_class(self):
+        serializer_class = super().get_serializer_class()
+        serializer_map = getattr(self, 'serializer_map', {})
+        return serializer_map.get(self.action, serializer_class)
+
+
+class StorageModelMixin(StorageMixin, viewsets.ModelViewSet):
+    pass
 
 
 class StoragePaginateMixin(StorageMixin, PaginateMixin):
+    pass
+
+
+class StorageModelPaginateMixin(PaginateMixin, StorageModelMixin):
     pass
 
 
@@ -50,7 +65,15 @@ class StorageAuthMixin(StorageMixin, AuthMixin):
     pass
 
 
+class StorageAuthModelMixin(AuthMixin, StorageModelMixin):
+    pass
+
+
 class StorageAuthPaginateMixin(StorageAuthMixin, StoragePaginateMixin):
+    pass
+
+
+class StorageAuthModelPaginateMixin(StorageAuthModelMixin, PaginateMixin):
     pass
 
 

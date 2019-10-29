@@ -1,20 +1,22 @@
 from rest_framework import viewsets
 
 from ..models import Part
-from ..views import StorageAuthMixin
+from ..views import StorageAuthModelPaginateMixin, StorageAuthMixin
 
-from .serializers import PartReadSerializer, PartFilterSerializer, PartWriteSerializer
+from .serializers import PartReadSerializer, PartFilterSerializer, PartWriteSerializer, PartShortSerializer
 
 
-class PartViewSet(StorageAuthMixin, viewsets.ModelViewSet):
+class PartViewSet(StorageAuthModelPaginateMixin):
     queryset = Part.objects.all()
     serializer_class = PartReadSerializer
     filter_serializer = PartFilterSerializer
+    serializer_map = {
+        'create': PartWriteSerializer,
+        'update': PartWriteSerializer,
+    }
 
-    def create(self, request, *args, **kwargs):
-        self.serializer_class = PartWriteSerializer
-        return super().create(request, args, kwargs)
 
-    def update(self, request, *args, **kwargs):
-        self.serializer_class = PartWriteSerializer
-        return super().update(request, args, kwargs)
+class PartShortViewSet(StorageAuthMixin, viewsets.ReadOnlyModelViewSet):
+    queryset = Part.objects.all()
+    serializer_class = PartShortSerializer
+    filter_serializer = PartFilterSerializer
