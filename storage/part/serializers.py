@@ -1,8 +1,13 @@
-
 from rest_framework import serializers
 
 from ..models import Part, PhoneModel
 from ..phone_model.serializers import PhoneModelSerializer
+
+
+class PartShortSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Part
+        fields = ('id', 'name')
 
 
 class PartReadSerializer(serializers.ModelSerializer):

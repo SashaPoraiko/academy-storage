@@ -1,12 +1,10 @@
-from rest_framework import viewsets
-
 from ..models import Phone
-from ..views import StorageAuthPaginateMixin
+from ..views import StorageAuthModelPaginateMixin
 
 from .serializers import PhoneWriteSerializer, PhoneReadSerializer, PhoneFilterSerializer
 
 
-class PhoneViewSet(StorageAuthPaginateMixin, viewsets.ModelViewSet):
+class PhoneViewSet(StorageAuthModelPaginateMixin):
     queryset = Phone.objects.all()
     serializer_class = PhoneReadSerializer
     filter_serializer = PhoneFilterSerializer

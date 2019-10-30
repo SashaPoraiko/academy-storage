@@ -1,4 +1,3 @@
-
 from rest_framework import serializers
 
 from ..models import Storage, Part, Phone
@@ -25,3 +24,27 @@ class StorageWriteSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         return PartReadSerializer(instance).data
+
+
+class StorageFilterSerializer(serializers.Serializer):
+    # todo fields
+
+
+    def validate(self, attrs):
+        attrs = super().validate(attrs)
+
+        filters = {}
+
+        column = attrs.get('column')
+        if column:
+            filters['column'] = column
+
+        row = attrs.get('row')
+        if row:
+            filters['row'] = row
+
+        locker = attrs.get('locker')
+        if locker:
+            filters['locker'] = locker
+
+        return filters
