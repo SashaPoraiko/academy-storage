@@ -4,6 +4,12 @@ from ..models import PhoneModel, Phone
 from ..serializers import UserSerializer
 
 
+class PhoneShortSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Phone
+        fields = ('id', 'name')
+
+
 class PhoneModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = PhoneModel

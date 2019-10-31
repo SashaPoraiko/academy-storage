@@ -3,10 +3,22 @@ from rest_framework import serializers
 from ..models import PhoneModel
 
 
+class PhoneModelShortSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PhoneModel
+        fields = ('id', 'name')
+
+
 class PhoneModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = PhoneModel
         fields = ('id', 'name', 'brand', 'model_year')
+
+
+class PhoneModelWriteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PhoneModel
+        fields = ('name', 'brand', 'model_year')
 
 
 class PhoneModelFilterSerializer(serializers.Serializer):

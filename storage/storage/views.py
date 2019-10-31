@@ -1,17 +1,21 @@
-from ..views import StorageAuthModelPaginateMixin
+from rest_framework import viewsets
+
+from ..views import StorageAuthModelPaginateMixin, StorageAuthMixin
 from ..models import Storage
-from .serializers import StorageReadSerializer, StorageWriteSerializer, StorageFilterSerializer
+from .serializers import StorageReadSerializer, StorageWriteSerializer, StorageFilterSerializer, StorageShortSerializer
 
 
 class StorageViewSet(StorageAuthModelPaginateMixin):
     queryset = Storage.objects.all()
     serializer_class = StorageReadSerializer
     filter_serializer = StorageFilterSerializer
+    serializer_map = {
+        'create': StorageWriteSerializer,
+        'update': StorageWriteSerializer,
+    }
 
-    def create(self, request, *args, **kwargs):
-        self.serializer_class = StorageWriteSerializer
-        return super().create(request, args, kwargs)
 
-    def update(self, request, *args, **kwargs):
-        self.serializer_class = StorageWriteSerializer
-        return super().update(request, args, kwargs)
+class StorageShortViewSet(StorageAuthMixin, viewsets.ReadOnlyViewSet):
+    queryset = Storage.objects.all()
+    serializer_class = StorageShortSerializer
+    filter_serializer = StorageShortSerializer
