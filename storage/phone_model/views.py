@@ -1,9 +1,11 @@
+from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 
-from ..views import StorageAuthModelPaginateMixin
+from ..views import StorageAuthModelPaginateMixin, StorageAuthMixin
 from ..permissions import IsManager
 from ..models import PhoneModel
-from .serializers import PhoneModelSerializer, PhoneModelFilterSerializer
+from .serializers import PhoneModelSerializer, PhoneModelFilterSerializer, PhoneModelShortSerializer, \
+    PhoneModelWriteSerializer
 
 
 class PhoneModelViewSet(StorageAuthModelPaginateMixin):
@@ -11,3 +13,13 @@ class PhoneModelViewSet(StorageAuthModelPaginateMixin):
     serializer_class = PhoneModelSerializer
     filter_serializer = PhoneModelFilterSerializer
     permission_classes = (IsAuthenticated, IsManager)
+    serializer_map = {
+        'create': PhoneModelWriteSerializer,
+        'update': PhoneModelWriteSerializer,
+    }
+
+
+class PhoneModelShortViewSet(StorageAuthMixin, viewsets.ReadOnlyViewSet):
+    queryset = PhoneModel.objects.all()
+    serializer_class = PhoneModelShortSerializer
+    filter_serializer = PhoneModelFilterSerializer

@@ -1,7 +1,9 @@
-from ..models import Phone
-from ..views import StorageAuthModelPaginateMixin
+from rest_framework import viewsets
 
-from .serializers import PhoneWriteSerializer, PhoneReadSerializer, PhoneFilterSerializer
+from ..models import Phone
+from ..views import StorageAuthModelPaginateMixin, StorageAuthMixin
+
+from .serializers import PhoneWriteSerializer, PhoneReadSerializer, PhoneFilterSerializer, PhoneShortSerializer
 
 
 class PhoneViewSet(StorageAuthModelPaginateMixin):
@@ -9,11 +11,13 @@ class PhoneViewSet(StorageAuthModelPaginateMixin):
     serializer_class = PhoneReadSerializer
     filter_serializer = PhoneFilterSerializer
     filter_parse_query_params = (('date-create-from', 'date_create_from'),)
+    serializer_map = {
+        'create': PhoneWriteSerializer,
+        'update': PhoneWriteSerializer,
+    }
 
-    def create(self, request, *args, **kwargs):
-        self.serializer_class = PhoneWriteSerializer
-        return super().create(request, args, kwargs)
 
-    def update(self, request, *args, **kwargs):
-        self.serializer_class = PhoneWriteSerializer
-        return super().update(request, args, kwargs)
+class PhoneShortViewSet(StorageAuthMixin, viewsets.ReadOnlyModelViewSet):
+    queryset = Phone.objects.all()
+    serializer_class = PhoneShortSerializer
+    filter_serializer = PhoneFilterSerializer

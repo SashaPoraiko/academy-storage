@@ -37,6 +37,7 @@ class StorageMixin(viewsets.GenericViewSet):
             self.request.query_params,
             getattr(self, 'filter_parse_query_params', None)
         )
+
         filter_serializer = filter_serializer(data=data, context={'request': self.request})
         if filter_serializer.is_valid():
             return queryset.filter(**filter_serializer.validated_data)
