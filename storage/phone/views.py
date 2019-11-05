@@ -21,3 +21,4 @@ class PhoneShortViewSet(StorageAuthMixin, viewsets.ReadOnlyModelViewSet):
     queryset = Phone.objects.all()
     serializer_class = PhoneShortSerializer
     filter_serializer = PhoneFilterSerializer
+    filter_parse_query_params = (('date-create-from', 'date_create_from'),)

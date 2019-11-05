@@ -1,5 +1,6 @@
 from rest_framework import serializers
 
+from ..phone_model.serializers import PhoneModelSerializer
 from ..models import PhoneModel, Phone
 from ..serializers import UserSerializer
 
@@ -8,12 +9,6 @@ class PhoneShortSerializer(serializers.ModelSerializer):
     class Meta:
         model = Phone
         fields = ('id', 'name')
-
-
-class PhoneModelSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = PhoneModel
-        fields = ('id', 'name', 'brand', 'model_year')
 
 
 class PhoneReadSerializer(serializers.ModelSerializer):
@@ -37,7 +32,7 @@ class PhoneWriteSerializer(serializers.ModelSerializer):
 
 
 class PhoneFilterSerializer(serializers.Serializer):
-    comment = serializers.CharField(required=False)
+    comment = serializers.CharField(required=False, max_length=80)
     model = serializers.IntegerField(required=False, min_value=1)
     date_create_from = serializers.DateField(required=False, input_formats=['iso-8601'])
     date_create_to = serializers.DateField(required=False, input_formats=['iso-8601'])

@@ -15,15 +15,9 @@ class PhoneModelSerializer(serializers.ModelSerializer):
         fields = ('id', 'name', 'brand', 'model_year')
 
 
-class PhoneModelWriteSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = PhoneModel
-        fields = ('name', 'brand', 'model_year')
-
-
 class PhoneModelFilterSerializer(serializers.Serializer):
-    name = serializers.CharField(required=False)
-    brand = serializers.CharField(required=False)
+    name = serializers.CharField(required=False, max_length=80)
+    brand = serializers.CharField(required=False, max_length=30)
 
     def validate(self, attrs):
         attrs = super().validate(attrs)

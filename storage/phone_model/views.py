@@ -4,8 +4,9 @@ from rest_framework.permissions import IsAuthenticated
 from ..views import StorageAuthModelPaginateMixin, StorageAuthMixin
 from ..permissions import IsManager
 from ..models import PhoneModel
-from .serializers import PhoneModelSerializer, PhoneModelFilterSerializer, PhoneModelShortSerializer, \
-    PhoneModelWriteSerializer
+from .serializers import PhoneModelSerializer, PhoneModelFilterSerializer, PhoneModelShortSerializer
+
+
 
 
 class PhoneModelViewSet(StorageAuthModelPaginateMixin):
@@ -13,10 +14,7 @@ class PhoneModelViewSet(StorageAuthModelPaginateMixin):
     serializer_class = PhoneModelSerializer
     filter_serializer = PhoneModelFilterSerializer
     permission_classes = (IsAuthenticated, IsManager)
-    serializer_map = {
-        'create': PhoneModelWriteSerializer,
-        'update': PhoneModelWriteSerializer,
-    }
+
 
 
 class PhoneModelShortViewSet(StorageAuthMixin, viewsets.ReadOnlyViewSet):

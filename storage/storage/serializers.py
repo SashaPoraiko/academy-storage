@@ -1,3 +1,4 @@
+from django.core.validators import MinValueValidator
 from rest_framework import serializers
 
 from ..models import Storage, Part, Phone
@@ -36,10 +37,9 @@ class StorageWriteSerializer(serializers.ModelSerializer):
 
 
 class StorageFilterSerializer(serializers.Serializer):
-    # todo fields
-    locker = serializers.CharField(required=False)
-    row = serializers.IntegerField(required=False)
-    column = serializers.IntegerField(required=False)
+    locker = serializers.CharField(required=False, max_length=80)
+    row = serializers.IntegerField(required=False, min_value=1, max_value=10)
+    column = serializers.IntegerField(required=False, min_value=1, max_value=10)
 
     def validate(self, attrs):
         attrs = super().validate(attrs)

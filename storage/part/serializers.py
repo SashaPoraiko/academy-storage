@@ -30,7 +30,7 @@ class PartWriteSerializer(serializers.ModelSerializer):
 
 
 class PartFilterSerializer(serializers.Serializer):
-    name = serializers.CharField(required=False)
+    name = serializers.CharField(required=False, max_length=80)
 
     def validate(self, attrs):
         attrs = super().validate(attrs)
