@@ -15,7 +15,7 @@ class StorageViewSet(StorageAuthModelPaginateMixin):
     }
 
 
-class StorageShortViewSet(StorageAuthMixin, viewsets.ReadOnlyViewSet):
+class StorageShortViewSet(StorageAuthMixin, viewsets.ReadOnlyModelViewSet):
     queryset = Storage.objects.all()
     serializer_class = StorageShortSerializer
     filter_serializer = StorageShortSerializer

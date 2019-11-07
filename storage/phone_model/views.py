@@ -17,7 +17,7 @@ class PhoneModelViewSet(StorageAuthModelPaginateMixin):
 
 
 
-class PhoneModelShortViewSet(StorageAuthMixin, viewsets.ReadOnlyViewSet):
+class PhoneModelShortViewSet(StorageAuthMixin, viewsets.ReadOnlyModelViewSet):
     queryset = PhoneModel.objects.all()
     serializer_class = PhoneModelShortSerializer
     filter_serializer = PhoneModelFilterSerializer
