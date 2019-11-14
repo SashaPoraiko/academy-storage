@@ -1,7 +1,7 @@
 from django.conf.urls import url
 from rest_framework import routers
 
-from storage.profile.views import ProfileView, ForgotPasswordView
+from storage.profile.views import ProfileView, ForgotPasswordView, ResetPasswordView
 from .part.views import PartViewSet, PartShortViewSet
 from .phone.views import PhoneViewSet, PhoneShortViewSet
 from .phone_model.views import PhoneModelViewSet, PhoneModelShortViewSet
@@ -25,6 +25,7 @@ router.register(r'storage', StorageViewSet)
 
 urlpatterns = [
     url(r'profile', ProfileView.as_view()),
-    url(r'password/forgot', ForgotPasswordView.as_view())
+    url(r'password/forgot', ForgotPasswordView.as_view()),
+    url(r'password/reset', ResetPasswordView.as_view()),
 ]
 urlpatterns += router.urls
