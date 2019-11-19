@@ -60,6 +60,7 @@ class ForgotPasswordView(APIView):
         })
 
 
+
 class ResetPasswordView(APIView):
     user = None
 

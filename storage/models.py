@@ -32,7 +32,7 @@ class Phone(models.Model):
     phone_model = models.ForeignKey('storage.PhoneModel', on_delete=models.CASCADE)
     author = models.ForeignKey('auth.User', on_delete=models.CASCADE)
     comment = models.CharField(max_length=255)
-    condition = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(10)])
+    condition = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(10)], default=1)
     date_release = models.DateTimeField(default=timezone.now)
     date_create = models.DateTimeField(default=timezone.now)
     date_modify = models.DateTimeField(default=timezone.now)
@@ -69,7 +69,8 @@ class Storage(models.Model):
     locker = models.CharField(max_length=80)
     row = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(10)])
     column = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(10)])
-    device = models.ForeignKey('storage.Device',  on_delete=models.CASCADE)
+    device = models.ForeignKey('storage.device', on_delete=models.CASCADE, null=True)
+
     # part = models.ForeignKey('storage.Part', null=True, blank=True, on_delete=models.CASCADE)
     # phone = models.ForeignKey('storage.Phone', null=True, blank=True, on_delete=models.CASCADE)
 

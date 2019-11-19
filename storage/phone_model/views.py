@@ -7,14 +7,11 @@ from ..models import PhoneModel
 from .serializers import PhoneModelSerializer, PhoneModelFilterSerializer, PhoneModelShortSerializer
 
 
-
-
 class PhoneModelViewSet(StorageAuthModelPaginateMixin):
     queryset = PhoneModel.objects.all()
     serializer_class = PhoneModelSerializer
     filter_serializer = PhoneModelFilterSerializer
     permission_classes = (IsAuthenticated, IsManager)
-
 
 
 class PhoneModelShortViewSet(StorageAuthMixin, viewsets.ReadOnlyModelViewSet):

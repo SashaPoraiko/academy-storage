@@ -51,9 +51,17 @@ def some_sort_b(lst):
     return lst
 
 
+@timer
+def my_sorted(*args, **kwargs):
+    return sorted(*args, **kwargs)
+
+
 if __name__ == '__main__':
     # liist = [6, 3, 5, 9, 1, 0, 4, 2, 7, 8, -1]
-    liist = random.sample(range(-1000000, 1000000), 400000)
+    count = 5
+    liist = random.sample(range(-(10 ** count), 10 ** count), 4 * 10 ** (count - 1))
+    print(len(liist))
     bubble_sort(liist)
     some_sort(liist)
     some_sort_b(liist)
+    my_sorted(liist)
