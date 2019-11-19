@@ -1,9 +1,11 @@
 from django.contrib.auth.models import User
+from django.shortcuts import render
 
 from rest_framework import viewsets
 from rest_framework.authentication import BasicAuthentication
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.views import APIView
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
 from storage.serializers import UserSerializer
@@ -83,3 +85,9 @@ class UserViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)
     queryset = User.objects.all()
     serializer_class = UserSerializer
+
+
+class IndexView(APIView):
+
+    def get(self, request):
+        return render(request, 'emails/forgot-password.html')

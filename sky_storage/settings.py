@@ -16,6 +16,7 @@ import os
 from datetime import timedelta
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+print(BASE_DIR)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
@@ -26,7 +27,8 @@ SECRET_KEY = 'f+jfr67(2e)2_v6(e6^+d3t-4%okb1b1jmj^o@26am8u=%lg9r'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+HOST = os.getenv('HOST', 'http://127.0.0.1:8000')
+ALLOWED_HOSTS = [HOST, '127.0.0.1', 'localhost']
 
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
@@ -89,7 +91,7 @@ ROOT_URLCONF = 'sky_storage.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -150,9 +152,12 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "staticfiles"),
+]
+print(STATIC_ROOT)
 EMAIL_HOST = os.getenv('EMAIL_HOST', 'smtp.gmail.com')
 EMAIL_PORT = int(os.getenv('EMAIL_PORT', '587'))
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', 'poraiko.alexandr@gmail.com')
-EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', '')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', 'Mepknergep118062506')
 EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS', 'True').lower() in ('1', 'true')

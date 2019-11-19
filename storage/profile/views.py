@@ -13,6 +13,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
+from sky_storage.settings import HOST
 from .serializers import ForgotPasswordSerializer, ValidatePasswordSerializer
 from ..serializers import UserSerializer
 
@@ -44,21 +45,23 @@ class ForgotPasswordView(APIView):
         user = User.objects.filter(is_active=True, email=validator.validated_data['email']).first()
 
         if user:
-            # todo send email html to user
-            text_content = 'This is an important message.'
-            # html_content = get_template('emails/forgot_password.html')
-            html_content = render_to_string('templates/emails/forgot_password.html',
-                                            {
-                                                'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-                                                'token': default_token_generator.make_token(user)
-                                            })
+            uid = urlsafe_base64_encode(force_bytes(user.pk))
+            token = default_token_generator.make_token(user)
+            context = {
+                'uid': uid,
+                'token': token,
+                'host': HOST,
+                'url': ''.join((HOST, '/api/v1/password/reset/?uid=', uid, '&token=', token)),
+                'logo_url': ''.join((HOST, '/static/images/monkey.png'))
+            }
+            text_content = f'Change password below, copy and paste the following link in your browser: {context["url"]}'
+            html_content = render_to_string('emails/forgot-password.html', context)
             msg = EmailMultiAlternatives('Forgot Password', text_content, 'Poraiko Alexandr', [user.email])
             msg.attach_alternative(html_content, "text/html")
             msg.send()
         return Response({
             'status': 'DELIVERY'
         })
-
 
 
 class ResetPasswordView(APIView):
