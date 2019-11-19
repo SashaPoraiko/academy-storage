@@ -1,8 +1,8 @@
 from django.contrib.auth.models import User
 from django.contrib.auth.tokens import default_token_generator
 from django.core.exceptions import ValidationError
-from django.core.mail import send_mail, EmailMultiAlternatives
-from django.template.loader import get_template, render_to_string
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 
@@ -13,7 +13,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
-from sky_storage.settings import HOST
+from sky_storage.settings import HOST, STATIC_URL
 from .serializers import ForgotPasswordSerializer, ValidatePasswordSerializer
 from ..serializers import UserSerializer
 
@@ -52,7 +52,7 @@ class ForgotPasswordView(APIView):
                 'token': token,
                 'host': HOST,
                 'url': ''.join((HOST, '/api/v1/password/reset/?uid=', uid, '&token=', token)),
-                'logo_url': ''.join((HOST, '/static/images/monkey.png'))
+                'logo_url': ''.join((HOST, STATIC_URL, 'images/monkey.png'))
             }
             text_content = f'Change password below, copy and paste the following link in your browser: {context["url"]}'
             html_content = render_to_string('emails/forgot-password.html', context)
