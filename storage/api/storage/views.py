@@ -1,7 +1,7 @@
 from rest_framework import viewsets
 
-from ..views import StorageAuthModelPaginateMixin, StorageAuthMixin
-from ..models import Storage
+from storage.api.views import StorageAuthModelPaginateMixin, StorageAuthMixin
+from storage.models import Storage
 from .serializers import StorageReadSerializer, StorageWriteSerializer, StorageFilterSerializer, StorageShortSerializer
 
 

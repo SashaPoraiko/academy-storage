@@ -1,15 +1,10 @@
-from django.core.validators import MinValueValidator
 from rest_framework import serializers
 
-from storage.device.serializers import DeviceReadSerializer
-from ..models import Storage, Part, Phone, Device
-from ..part.serializers import PartReadSerializer
-from ..phone.serializers import PhoneReadSerializer
+from storage.models import Storage, Device
+from ..device.serializers import DeviceReadSerializer
 
 
 class StorageReadSerializer(serializers.ModelSerializer):
-    # part = PartReadSerializer()
-    # phone = PhoneReadSerializer()
     device = DeviceReadSerializer()
 
     class Meta:
@@ -18,8 +13,6 @@ class StorageReadSerializer(serializers.ModelSerializer):
 
 
 class StorageShortSerializer(serializers.ModelSerializer):
-    # part = PartReadSerializer()
-    # phone = PhoneReadSerializer()
     device = DeviceReadSerializer()
 
     class Meta:
@@ -28,16 +21,14 @@ class StorageShortSerializer(serializers.ModelSerializer):
 
 
 class StorageWriteSerializer(serializers.ModelSerializer):
-    # part = serializers.PrimaryKeyRelatedField(queryset=Part.objects.all())
-    # phone = serializers.PrimaryKeyRelatedField(queryset=Phone.objects.all())
     device = serializers.PrimaryKeyRelatedField(queryset=Device.objects.all())
 
     class Meta:
         model = Storage
         fields = ('locker', 'row', 'column', 'device')
 
-    # def to_representation(self, instance):
-    #     return PartReadSerializer(instance).data
+    def to_representation(self, instance):
+        return StorageReadSerializer(instance).data
 
 
 class StorageFilterSerializer(serializers.Serializer):

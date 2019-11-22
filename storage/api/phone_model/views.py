@@ -1,9 +1,9 @@
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 
-from ..views import StorageAuthModelPaginateMixin, StorageAuthMixin
-from ..permissions import IsManager
-from ..models import PhoneModel
+from storage.api.views import StorageAuthModelPaginateMixin, StorageAuthMixin
+from storage.permissions import IsManager
+from storage.models import PhoneModel
 from .serializers import PhoneModelSerializer, PhoneModelFilterSerializer, PhoneModelShortSerializer
 
 

@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from ..models import PhoneModel
+from storage.models import PhoneModel
 
 
 class PhoneModelShortSerializer(serializers.ModelSerializer):

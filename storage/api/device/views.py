@@ -1,8 +1,8 @@
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 
-from ..views import StorageAuthModelPaginateMixin, StorageAuthMixin
-from ..models import  Device
+from storage.models import Device
+from storage.api.views import StorageAuthMixin
 from .serializers import DeviceReadSerializer
 
 

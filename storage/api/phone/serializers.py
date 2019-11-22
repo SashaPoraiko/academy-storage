@@ -1,14 +1,21 @@
 from rest_framework import serializers
 
+from storage.models import PhoneModel, Phone
+from ..device.mixins import DeviceWriteMixin
 from ..phone_model.serializers import PhoneModelSerializer
-from ..models import PhoneModel, Phone
-from ..serializers import UserSerializer
+from ..profile.serializers import UserSerializer
 
 
 class PhoneShortSerializer(serializers.ModelSerializer):
+    name = serializers.SerializerMethodField()
+
     class Meta:
         model = Phone
         fields = ('id', 'name')
+
+    @classmethod
+    def get_name(cls, instance):
+        return f'{instance.phone_model} {instance.condition}'
 
 
 class PhoneReadSerializer(serializers.ModelSerializer):
@@ -17,18 +24,18 @@ class PhoneReadSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Phone
-        fields = ('id', 'phone_model', 'author', 'comment', 'date_release', 'date_create', 'date_modify')
+        fields = ('id', 'phone_model', 'author', 'comment', 'date_release', 'date_create', 'date_modify', 'device')
 
 
-class PhoneWriteSerializer(serializers.ModelSerializer):
+class PhoneWriteSerializer(DeviceWriteMixin):
     phone_model = serializers.PrimaryKeyRelatedField(queryset=PhoneModel.objects.all())
 
     class Meta:
         model = Phone
         fields = ('phone_model', 'author', 'comment', 'date_release', 'date_create', 'date_modify')
 
-    # def to_representation(self, instance):
-    #     return PhoneReadSerializer(instance).data
+    def to_representation(self, instance):
+        return PhoneReadSerializer(instance).data
 
 
 class PhoneFilterSerializer(serializers.Serializer):

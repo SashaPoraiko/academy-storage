@@ -1,7 +1,7 @@
 from rest_framework import viewsets
 
-from ..models import Part
-from ..views import StorageAuthModelPaginateMixin, StorageAuthMixin
+from storage.models import Part
+from storage.api.views import StorageAuthModelPaginateMixin, StorageAuthMixin
 
 from .serializers import PartReadSerializer, PartFilterSerializer, PartWriteSerializer, PartShortSerializer
 

@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
-from ..models import Part, PhoneModel
+from storage.models import Part, PhoneModel
+from ..device.mixins import DeviceWriteMixin
 from ..phone_model.serializers import PhoneModelSerializer
 
 
@@ -15,10 +16,10 @@ class PartReadSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Part
-        fields = ('id', 'name', 'condition', 'phone_models')
+        fields = ('id', 'name', 'condition', 'phone_models', 'device')
 
 
-class PartWriteSerializer(serializers.ModelSerializer):
+class PartWriteSerializer(DeviceWriteMixin):
     phone_models = serializers.PrimaryKeyRelatedField(queryset=PhoneModel.objects.all(), many=True)
 
     class Meta:

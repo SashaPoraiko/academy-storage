@@ -1,7 +1,7 @@
 from rest_framework import viewsets
 
-from ..models import Phone
-from ..views import StorageAuthModelPaginateMixin, StorageAuthMixin
+from storage.models import Phone
+from storage.api.views import StorageAuthModelPaginateMixin, StorageAuthMixin
 
 from .serializers import PhoneWriteSerializer, PhoneReadSerializer, PhoneFilterSerializer, PhoneShortSerializer
 

@@ -7,18 +7,17 @@ from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 
 from rest_framework.exceptions import PermissionDenied
-from rest_framework.generics import RetrieveUpdateAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from rest_framework.views import APIView
+from rest_framework import viewsets, views
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
 from sky_storage.settings import HOST, STATIC_URL
-from .serializers import ForgotPasswordSerializer, ValidatePasswordSerializer
-from ..serializers import UserSerializer
+from storage.api.views import StorageAuthPaginateMixin
+from .serializers import ForgotPasswordSerializer, ValidatePasswordSerializer, UserSerializer
 
 
-class ProfileView(RetrieveUpdateAPIView):
+class ProfileView(views.APIView):
     authentication_classes = (JWTAuthentication,)
     permission_classes = (IsAuthenticated,)
     serializer_class = UserSerializer
@@ -36,7 +35,7 @@ class ProfileView(RetrieveUpdateAPIView):
         return self.user
 
 
-class ForgotPasswordView(APIView):
+class ForgotPasswordView(views.APIView):
     serializer_class = ForgotPasswordSerializer
 
     def post(self, request):
@@ -64,7 +63,7 @@ class ForgotPasswordView(APIView):
         })
 
 
-class ResetPasswordView(APIView):
+class ResetPasswordView(views.APIView):
     user = None
 
     @classmethod
@@ -93,3 +92,8 @@ class ResetPasswordView(APIView):
         self.user.set_password(validator.validated_data['password'])
         self.user.save()
         return Response({'status': 'Successfully'})
+
+
+class UserViewSet(StorageAuthPaginateMixin, viewsets.ReadOnlyModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer

@@ -52,8 +52,8 @@ class Part(models.Model):
 
 
 class Device(models.Model):
-    part = models.ForeignKey('storage.Part', null=True, blank=True, on_delete=models.PROTECT, unique=True)
-    phone = models.ForeignKey('storage.Phone', null=True, blank=True, on_delete=models.PROTECT, unique=True)
+    part = models.OneToOneField('storage.Part', null=True, blank=True, on_delete=models.PROTECT)
+    phone = models.OneToOneField('storage.Phone', null=True, blank=True, on_delete=models.PROTECT)
 
     def save(self, force_insert=False, force_update=False, using=None,
              update_fields=None):
@@ -70,9 +70,6 @@ class Storage(models.Model):
     row = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(10)])
     column = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(10)])
     device = models.ForeignKey('storage.device', on_delete=models.CASCADE, null=True)
-
-    # part = models.ForeignKey('storage.Part', null=True, blank=True, on_delete=models.CASCADE)
-    # phone = models.ForeignKey('storage.Phone', null=True, blank=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return ' '.join(map(str, (self.locker, self.row, self.column)))
