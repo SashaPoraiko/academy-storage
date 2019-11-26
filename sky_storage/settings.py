@@ -11,21 +11,21 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+import sys
+
 import dj_database_url
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 from datetime import timedelta
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-print(BASE_DIR)
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'f+jfr67(2e)2_v6(e6^+d3t-4%okb1b1jmj^o@26am8u=%lg9r'
+SECRET_KEY = os.getenv('SECRET_KEY', 'f+jfr67(2e)2_v6(e6^+d3t-4%okb1b1jmj^o@26am8u=%lg9r')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = 'runserver' in sys.argv
 
 HOST = os.getenv('HOST', 'http://127.0.0.1:8000')
 ALLOWED_HOSTS = [HOST, '127.0.0.1', 'localhost', 'stark-inlet-12345.herokuapp.com']
@@ -110,11 +110,10 @@ WSGI_APPLICATION = 'sky_storage.wsgi.application'
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
 DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    # }
-    'default': dj_database_url.config(default='')
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    } if DEBUG else dj_database_url.config(default='')
 }
 
 # Password validation

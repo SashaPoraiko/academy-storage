@@ -6,4 +6,4 @@ from rest_framework.views import APIView
 class IndexView(APIView):
 
     def get(self, request):
-        return render(request, 'emails/forgot-password.html')
+        return render(request, 'index.html')
