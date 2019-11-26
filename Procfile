@@ -1,1 +1,1 @@
-web: python manage.py runserver 0.0.0.0:80
+web: gunicorn sky_storage.wsgi --log-file -
