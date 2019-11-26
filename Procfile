@@ -1,1 +1,1 @@
-web: gunicorn  sky_storage:application -b 0.0.0.0
+web: python manage.py runserver 0.0.0.0:80
