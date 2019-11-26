@@ -28,7 +28,7 @@ SECRET_KEY = 'f+jfr67(2e)2_v6(e6^+d3t-4%okb1b1jmj^o@26am8u=%lg9r'
 DEBUG = True
 
 HOST = os.getenv('HOST', 'http://127.0.0.1:8000')
-ALLOWED_HOSTS = [HOST, '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = [HOST, '127.0.0.1', 'localhost', 'stark-inlet-12345.herokuapp.com']
 
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
@@ -155,7 +155,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'media/static')
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
-print(STATIC_ROOT)
+
 EMAIL_HOST = os.getenv('EMAIL_HOST', 'smtp.gmail.com')
 EMAIL_PORT = int(os.getenv('EMAIL_PORT', '587'))
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', 'poraiko.alexandr@gmail.com')
