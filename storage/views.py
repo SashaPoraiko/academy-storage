@@ -1,9 +1,5 @@
-from django.shortcuts import render
-
-from rest_framework.views import APIView
+from django.views.generic import TemplateView
 
 
-class IndexView(APIView):
-
-    def get(self, request):
-        return render(request, 'index.html')
+class IndexView(TemplateView):
+    template_name = 'index.html'

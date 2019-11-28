@@ -17,6 +17,8 @@ import dj_database_url
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 from datetime import timedelta
 
+from django.conf.global_settings import DEBUG
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
@@ -25,7 +27,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.getenv('SECRET_KEY', 'f+jfr67(2e)2_v6(e6^+d3t-4%okb1b1jmj^o@26am8u=%lg9r')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = 'runserver' in sys.argv
+# DEBUG = 'runserver' in sys.argv
+# todo use environment
+DEBUG = True
 
 HOST = os.getenv('HOST', 'http://127.0.0.1:8000')
 ALLOWED_HOSTS = [HOST, '127.0.0.1', 'localhost', 'stark-inlet-12345.herokuapp.com']
@@ -72,6 +76,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'storage',
+    'management',
     'rest_framework',
     'rest_framework.authtoken'
 ]
@@ -159,5 +164,5 @@ STATICFILES_DIRS = [
 EMAIL_HOST = os.getenv('EMAIL_HOST', 'smtp.gmail.com')
 EMAIL_PORT = int(os.getenv('EMAIL_PORT', '587'))
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', 'poraiko.alexandr@gmail.com')
-EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', 'Mepknergep118062506')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', '')
 EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS', 'True').lower() in ('1', 'true')
