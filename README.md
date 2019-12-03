@@ -1,10 +1,10 @@
-# Django 2.0+ project template
+# Django 3.7 project template
 
-This is a simple Django 2.0+ project template with my preferred setup. Most Django project templates make way too many assumptions or are just way too complicated. I try to make the least amount of assumptions possible while still trying provide a useful setup. Most of my projects are deployed to Heroku, so this is optimized for that but is not necessary.
+This is a simple Django 3.7 project template with my preferred setup. Most Django project templates make way too many assumptions or are just way too complicated. I try to make the least amount of assumptions possible while still trying provide a useful setup. Most of my projects are deployed to Heroku, so this is optimized for that but is not necessary.
 
 ## Features
 
-- Django 2.0+
+- Django 3.7
 - Uses [Pipenv](https://github.com/kennethreitz/pipenv) - the officially recommended Python packaging tool from Python.org.
 - Development, Staging and Production settings with [django-configurations](https://django-configurations.readthedocs.org).
 - Get value insight and debug information while on Development with [django-debug-toolbar](https://django-debug-toolbar.readthedocs.org).
@@ -17,7 +17,7 @@ This is a simple Django 2.0+ project template with my preferred setup. Most Djan
 
 ```bash
 $ django-admin.py startproject \
-  --template=https://github.com/jpadilla/django-project-template/archive/master.zip \
+  Clone the project:--template=https://github.com/SashaPoraiko/academy-storage.git \
   --name=Procfile \
   --extension=py,md,env \
   project_name
@@ -87,10 +87,12 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
+## Supportive commands:
+These commands can help you during project development:
 
-first project 
+```bash
 pip freeze > requirements.txt
 pip install -r requirements.txt
 python manage.py makemigrations
 python manage.py migrate
-
+```
