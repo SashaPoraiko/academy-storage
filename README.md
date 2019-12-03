@@ -1,10 +1,10 @@
-# Django 3.7 project template
+# Django 2.0+ project template
 
 This is academic django project deployed on heroku
 
 ## Features
 
-- Django 3.7
+- Django 2.0+
 - Uses [Pipenv](https://github.com/kennethreitz/pipenv) - the officially recommended Python packaging tool from Python.org.
 - Development, Staging and Production settings with [django-configurations](https://django-configurations.readthedocs.org).
 - Get value insight and debug information while on Development with [django-debug-toolbar](https://django-debug-toolbar.readthedocs.org).
