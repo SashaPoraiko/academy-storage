@@ -96,3 +96,7 @@ pip install -r requirements.txt
 python manage.py makemigrations
 python manage.py migrate
 ```
+
+
+#VIEW RETURNS CONTEXT
+#API_VIEW RETURNS DATA

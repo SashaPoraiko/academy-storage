@@ -10,7 +10,7 @@ from storage.api.utils import parse_query_params
 
 
 class StoragePagination(PageNumberPagination):
-    page_size = 2
+    page_size = 10
     max_page_size = 1000
     page_size_query_param = 'page-size'
 
