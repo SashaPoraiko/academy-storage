@@ -1,7 +1,7 @@
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User, Group
 
-from rest_framework.test import APIClient, APITestCase
+from rest_framework.test import APITestCase
 
 from storage.models import PhoneModel
 
@@ -10,7 +10,6 @@ class PhoneModelListViewTest(APITestCase):
 
     @classmethod
     def setUpTestData(cls):
-        # Create 13 authors for pagination tests
         number_of_phone_models = 13
 
         for phone_model_num in range(number_of_phone_models):
@@ -46,7 +45,7 @@ class PhoneModelListViewTest(APITestCase):
         self.assertEqual(resp.data['count'], 13)
         self.assertEqual(len(resp.data['results']), 10)
 
-    def test_lists_all_authors(self):
+    def test_lists_all_parts(self):
         self.client.force_authenticate(self.user)
         resp = self.client.get('/api/v1/phone-model/', {'page': 2})
         self.assertEqual(resp.status_code, 200)
