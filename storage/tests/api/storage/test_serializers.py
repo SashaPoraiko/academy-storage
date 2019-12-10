@@ -1,8 +1,7 @@
 from rest_framework.test import APITestCase
 
-from storage.api.phone_model.serializers import PhoneModelSerializer
-from storage.api.storage.serializers import StorageShortSerializer, StorageReadSerializer, StorageWriteSerializer
-from storage.models import PhoneModel, Part, Device, Storage
+from storage.api.storage.serializers import StorageReadSerializer, StorageWriteSerializer
+from storage.models import Part, Device, Storage
 
 
 class StorageSerializerTest(APITestCase):
@@ -21,10 +20,9 @@ class StorageSerializerTest(APITestCase):
         serializer = StorageReadSerializer(instance=Storage.objects.create(**self.data))
         self.assertIn("id", serializer.data)
         self.assertEqual(serializer.data['id'], 1)
-        print(serializer.data)
-        # for key, value in self.data.items():
-        #     with self.subTest(key=key, value=value):
-        #         self.assertIn(key, serializer.data)
+        for key, value in self.data.items():
+            with self.subTest(key=key, value=value):
+                self.assertIn(key, serializer.data)
         #         self.assertEqual(serializer.data[key], value)
 
     # def test_valid_write(self):

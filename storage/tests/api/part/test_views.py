@@ -15,16 +15,6 @@ class PartModelListViewTest(APITestCase):
         cls.user = User.objects.create(username=username, password=make_password(password))
         cls.user.groups.set([group])
 
-        # cls.client.force_authenticate(cls.user)
-        # todo rewrite force_authenticate to credentials method
-        # cls.headers = {
-        #     'Authorization': 'Bearer %s' % cls.api_client.post('/api/auth/token/', {
-        #         "username": username,
-        #         "password": password,
-        #     }).data['access']
-        # }
-        # cls.api_client.credentials(HTTP_AUTORIZATION=cls.headers['Authorization'])
-
     def test_view_url_exists_at_desired_location(self):
         self.client.force_authenticate(self.user)
         resp = self.client.get('/api/v1/part/')
