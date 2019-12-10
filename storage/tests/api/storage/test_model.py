@@ -15,8 +15,10 @@ class PhoneModelModelTest(TestCase):
         max_length_locker = self.storage._meta.get_field('locker').max_length
         self.assertEquals(max_length_locker, 80)
 
-    def test_valid_row_column(self):
+    def test_valid_row(self):
         row = self.storage.row
-        column = self.storage.column
         self.assertTrue(0 < row <= 10)
+
+    def test_valid_column(self):
+        column = self.storage.column
         self.assertTrue(0 < column <= 10)

@@ -3,5 +3,5 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('feedback', views.FeedbackCreateView.as_view(), name='feedback'),
+    path('management/feedback', views.AjaxFeedbackCreateView.as_view(), name='feedback'),
 ]

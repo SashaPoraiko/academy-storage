@@ -1,26 +1,34 @@
 from rest_framework.test import APITestCase
 
 from storage.api.part.serializers import PartWriteSerializer, PartReadSerializer
-from storage.models import Part
+from storage.models import Part, PhoneModel
 
 
 class PartSerializerTest(APITestCase):
     @classmethod
     def setUpTestData(cls):
-        phone_models = ({'name': 'asd', 'brand': 'thebrand', 'model_year': 1993},
-                        {'name': 'asd', 'brand': 'thebrand', 'model_year': 1993})
+        phone_models = [
+            {'name': 'asd', 'brand': 'thebrand', 'model_year': 1993},
+            {'name': 'asd', 'brand': 'thebrand', 'model_year': 1993}
+        ]
+        cls.phone_model_instances = []
+        for phone_model in phone_models:
+            cls.phone_model_instances.append(PhoneModel.objects.create(**phone_model))
+
         cls.data = {
             "name": "CHIP",
-            "condition": 8,
+            "condition": 8
         }
-        cls.write_data = {
-            "name": "CHIP",
-            "condition": 8,
-            "phone_models": phone_models
-        }
+        cls.read_data = cls.data.copy()
+        cls.read_data["phone_models"] = phone_models
+
+        cls.write_data = cls.data.copy()
+        cls.write_data["phone_models"] = list(map(lambda x: getattr(x, 'id', None), cls.phone_model_instances))
 
     def test_read(self):
-        serializer = PartReadSerializer(instance=Part.objects.create(**self.data))
+        part = Part.objects.create(**self.data)
+        part.phone_models.set(self.phone_model_instances)
+        serializer = PartReadSerializer(instance=part)
         self.assertIn("id", serializer.data)
         self.assertEqual(serializer.data['id'], 1)
         for key, value in self.data.items():
@@ -28,7 +36,6 @@ class PartSerializerTest(APITestCase):
                 self.assertIn(key, serializer.data)
                 self.assertEqual(serializer.data[key], value)
 
-    # def test_valid_write(self):
-    #     serializer = PartWriteSerializer(data=self.write_data)
-    #
-    #     self.assertTrue(serializer.is_valid())
+    def test_valid_write(self):
+        serializer = PartWriteSerializer(data=self.write_data)
+        self.assertTrue(serializer.is_valid())

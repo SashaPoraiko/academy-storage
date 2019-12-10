@@ -1,12 +1,16 @@
+from django.conf import settings
 from django.shortcuts import render
 
-from rest_framework import viewsets
+from rest_framework import viewsets, views
+from rest_framework.authentication import SessionAuthentication
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.views import APIView
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
 from storage.api.utils import parse_query_params
+
+
+AUTHENTICATION_CLASSES = (JWTAuthentication, SessionAuthentication) if settings.DEBUG else (JWTAuthentication,)
 
 
 class StoragePagination(PageNumberPagination):
@@ -16,7 +20,7 @@ class StoragePagination(PageNumberPagination):
 
 
 class AuthMixin(viewsets.GenericViewSet):
-    authentication_classes = (JWTAuthentication,)
+    authentication_classes = AUTHENTICATION_CLASSES
     permission_classes = (IsAuthenticated,)
 
 
@@ -77,8 +81,7 @@ class StorageAuthModelPaginateMixin(StorageAuthModelMixin, PaginateMixin):
     pass
 
 
-
-class IndexView(APIView):
+class IndexView(views.APIView):
 
     def get(self, request):
         return render(request, 'emails/forgot-password.html')

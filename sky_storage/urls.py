@@ -8,10 +8,7 @@ from sky_storage import settings
 
 urlpatterns = [
     path('', include("storage.urls")),
-    # todo fix
-    # path('management/', include("management.urls")),
-    path('management/feedback', views.FeedbackCreateView.as_view(), name='feedback'),
-
+    path('', include("management.urls")),
     path('admin/', admin.site.urls),
     path('api/auth/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/auth/refresh/', TokenRefreshView.as_view(), name='token_refresh'),

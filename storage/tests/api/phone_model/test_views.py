@@ -34,12 +34,12 @@ class PhoneModelListViewTest(APITestCase):
 
     def test_view_url_exists_at_desired_location(self):
         self.client.force_authenticate(self.user)
-        resp = self.client.get('/api/v1/phone-model/')
+        resp = self.client.get('/api/v1/phone_model/')
         self.assertEqual(resp.status_code, 200)
 
     def test_pagination_is_ten(self):
         self.client.force_authenticate(self.user)
-        resp = self.client.get('/api/v1/phone-model/')
+        resp = self.client.get('/api/v1/phone_model/')
         self.assertEqual(resp.status_code, 200)
         self.assertTrue('count' in resp.data)
         self.assertEqual(resp.data['count'], 13)
@@ -47,7 +47,7 @@ class PhoneModelListViewTest(APITestCase):
 
     def test_lists_all_parts(self):
         self.client.force_authenticate(self.user)
-        resp = self.client.get('/api/v1/phone-model/', {'page': 2})
+        resp = self.client.get('/api/v1/phone_model/', {'page': 2})
         self.assertEqual(resp.status_code, 200)
         self.assertTrue('count' in resp.data)
         self.assertEqual(resp.data['count'], 13)
