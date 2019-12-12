@@ -19,8 +19,11 @@ class PartSerializerTest(APITestCase):
             "name": "CHIP",
             "condition": 8
         }
-        cls.invalid_data={
-            "condition": 8
+        cls.filter_data = {
+            "name": "CHIP",
+        }
+        cls.invalid_filter_data = {
+            "name": {}
         }
         cls.read_data = cls.data.copy()
         cls.read_data["phone_models"] = phone_models
@@ -44,11 +47,9 @@ class PartSerializerTest(APITestCase):
         self.assertTrue(serializer.is_valid())
 
     def test_valid_filter(self):
-        serializer = PartFilterSerializer()
-        apply_filters = serializer.validate(self.data)
-        self.assertTrue(apply_filters)
+        serializer = PartFilterSerializer(data=self.filter_data)
+        self.assertTrue(serializer.is_valid())
 
     def test_invalid_filter(self):
-        serializer = PartFilterSerializer()
-        apply_filters = serializer.validate(self.invalid_data)
-        self.assertFalse(apply_filters)
+        serializer = PartFilterSerializer(data=self.invalid_filter_data)
+        self.assertFalse(serializer.is_valid())
