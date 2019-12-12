@@ -44,6 +44,6 @@ class AjaxFeedbackCreateView(CreateView):
                        f' {form_kwargs.get("phone")}'
 
         html_content = render_to_string('emails/feedback.html', context)
-        msg = EmailMultiAlternatives('Feedback', text_content, 'Poraiko Alexandr', [EMAIL_HOST_USER])
+        msg = EmailMultiAlternatives('Feedback', text_content, f'{form_kwargs.get("name")}', [EMAIL_HOST_USER])
         msg.attach_alternative(html_content, "text/html")
         msg.send()
