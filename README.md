@@ -61,6 +61,8 @@ $ heroku addons:add heroku-postgresql:hobby-dev
 $ heroku pg:promote DATABASE_URL
 $ heroku config:set ENVIRONMENT=PRODUCTION
 $ heroku config:set DJANGO_SECRET_KEY=`./manage.py generate_secret_key`
+
+I DISABLED COLLECTSTATIC ON HEROKU !!!
 ```
 
 ## License
