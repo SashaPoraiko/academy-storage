@@ -1,9 +1,12 @@
+from django.core.mail import EmailMultiAlternatives
 from django.http import JsonResponse
+from django.template.loader import render_to_string
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import CreateView
 
 from management.models import Feedback
+from sky_storage.settings import HOST, EMAIL_HOST_USER
 
 
 @method_decorator(csrf_exempt, name='dispatch')
@@ -27,4 +30,12 @@ class AjaxFeedbackCreateView(CreateView):
     def send_email(self):
         # todo write and use
         # send email using the self.cleaned_data dictionary
-        vr = 1
+        context = {
+            'host': HOST,
+        }
+        text_content = 'MESSAGE'
+        html_content = render_to_string('emails/feedback.html', context)
+        # msg = EmailMultiAlternatives()
+        msg = EmailMultiAlternatives('Feedback', text_content, 'Poraiko Alexandr', [EMAIL_HOST_USER])
+        msg.attach_alternative(html_content, "text/html")
+        msg.send()
