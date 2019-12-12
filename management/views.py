@@ -30,12 +30,20 @@ class AjaxFeedbackCreateView(CreateView):
     def send_email(self):
         # todo write and use
         # send email using the self.cleaned_data dictionary
+        form_kwargs = self.get_form_kwargs()["data"]
+
         context = {
             'host': HOST,
+            'name': form_kwargs.get("name"),
+            'email': form_kwargs.get("email"),
+            'message': form_kwargs.get("message"),
+            'phone': form_kwargs.get("phone"),
         }
-        text_content = 'MESSAGE'
+        text_content = f'Feedback from: {form_kwargs.get("name")}, with email: {form_kwargs.get("email")},' \
+                       f' his message is: {form_kwargs.get("message")},and his phone number are:' \
+                       f' {form_kwargs.get("phone")}'
+
         html_content = render_to_string('emails/feedback.html', context)
-        # msg = EmailMultiAlternatives()
         msg = EmailMultiAlternatives('Feedback', text_content, 'Poraiko Alexandr', [EMAIL_HOST_USER])
         msg.attach_alternative(html_content, "text/html")
         msg.send()
