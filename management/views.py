@@ -19,6 +19,7 @@ class AjaxFeedbackCreateView(CreateView):
     def form_valid(self, form):
         super().form_valid(form)
         # todo use send email
+        self.send_email()
         return JsonResponse({
             'pk': self.object.pk,
         })
@@ -26,4 +27,4 @@ class AjaxFeedbackCreateView(CreateView):
     def send_email(self):
         # todo write and use
         # send email using the self.cleaned_data dictionary
-        pass
+        vr = 1

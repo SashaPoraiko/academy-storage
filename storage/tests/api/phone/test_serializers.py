@@ -3,7 +3,7 @@ import datetime
 from django.contrib.auth.models import User
 from rest_framework.test import APITestCase
 
-from storage.api.phone.serializers import PhoneReadSerializer, PhoneWriteSerializer
+from storage.api.phone.serializers import PhoneReadSerializer, PhoneWriteSerializer, PhoneFilterSerializer
 from storage.models import PhoneModel, Phone
 from datetime import datetime
 
@@ -23,12 +23,19 @@ class PhoneSerializerTest(APITestCase):
         }
         p_m = PhoneModel.objects.create(**phone_model)
 
-        date_format='%Y-%m-%dT%H:%M:%S.%fZ'
+        date_format = '%Y-%m-%dT%H:%M:%S.%fZ'
 
         cls.data = {
             'phone_model': p_m,
             'author': author_instance,
             'comment': 'mycomment',
+            'date_release': datetime.today(),
+            'date_create': datetime.today(),
+            'date_modify': datetime.today(),
+        }
+        cls.invalid_data = {
+            'phone_model': p_m,
+            'author': author_instance,
             'date_release': datetime.today(),
             'date_create': datetime.today(),
             'date_modify': datetime.today(),
@@ -46,7 +53,6 @@ class PhoneSerializerTest(APITestCase):
             'author': author_instance.id,
             'phone_model': p_m.id,
         })
-
 
     def test_read(self):
         serializer = PhoneReadSerializer(instance=Phone.objects.create(**self.data))
@@ -68,3 +74,14 @@ class PhoneSerializerTest(APITestCase):
         serializer = PhoneWriteSerializer(data=self.write_data)
         serializer.is_valid()
         self.assertTrue(serializer.is_valid())
+
+    def test_valid_filter(self):
+        serializer = PhoneFilterSerializer()
+        apply_filters = serializer.validate(self.data)
+        self.assertTrue(apply_filters)
+
+    def test_invalid_filter(self):
+        serializer = PhoneFilterSerializer()
+        apply_filters = serializer.validate(self.invalid_data)
+        self.assertFalse(apply_filters)
+

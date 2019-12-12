@@ -25,3 +25,12 @@ class PhoneListViewTest(APITestCase):
         resp = self.client.get('/api/v1/storage/')
         self.assertEqual(resp.status_code, 200)
         self.assertTrue('count' in resp.data)
+
+    # def test_pagination_is_ten(self):
+    #     self.client.force_authenticate(self.user)
+    #     resp = self.client.get('/api/v1/storage/')
+    #     print(resp.data)
+    #     self.assertEqual(resp.status_code, 200)
+    #     self.assertTrue('count' in resp.data)
+    #     self.assertEqual(resp.data['count'], 13)
+    #     self.assertEqual(len(resp.data['results']), 10)

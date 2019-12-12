@@ -1,6 +1,6 @@
 from rest_framework.test import APITestCase
 
-from storage.api.part.serializers import PartWriteSerializer, PartReadSerializer
+from storage.api.part.serializers import PartWriteSerializer, PartReadSerializer, PartFilterSerializer
 from storage.models import Part, PhoneModel
 
 
@@ -17,6 +17,9 @@ class PartSerializerTest(APITestCase):
 
         cls.data = {
             "name": "CHIP",
+            "condition": 8
+        }
+        cls.invalid_data={
             "condition": 8
         }
         cls.read_data = cls.data.copy()
@@ -39,3 +42,13 @@ class PartSerializerTest(APITestCase):
     def test_valid_write(self):
         serializer = PartWriteSerializer(data=self.write_data)
         self.assertTrue(serializer.is_valid())
+
+    def test_valid_filter(self):
+        serializer = PartFilterSerializer()
+        apply_filters = serializer.validate(self.data)
+        self.assertTrue(apply_filters)
+
+    def test_invalid_filter(self):
+        serializer = PartFilterSerializer()
+        apply_filters = serializer.validate(self.invalid_data)
+        self.assertFalse(apply_filters)
