@@ -26,8 +26,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv('SECRET_KEY', 'f+jfr67(2e)2_v6(e6^+d3t-4%okb1b1jmj^o@26am8u=%lg9r')
 
-DEBUG = os.getenv('DJANGO_DEBUG', 'false').lower() in ('1', 'true')
-
+# DEBUG = os.getenv('DJANGO_DEBUG', 'false').lower() in ('1', 'true')
+DEBUG = True
 HOST = os.getenv('HOST', 'http://127.0.0.1:8000')
 ALLOWED_HOSTS = ['*' if DEBUG else 'stark-inlet-12345.herokuapp.com']
 
@@ -86,6 +86,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware'
 ]
 
 ROOT_URLCONF = 'sky_storage.urls'
