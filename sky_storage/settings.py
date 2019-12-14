@@ -30,6 +30,7 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'f+jfr67(2e)2_v6(e6^+d3t-4%okb1b1jmj^o@26am
 DEBUG = True
 HOST = os.getenv('HOST', 'http://127.0.0.1:8000')
 ALLOWED_HOSTS = ['*' if DEBUG else 'stark-inlet-12345.herokuapp.com']
+DEBUG = True
 
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
